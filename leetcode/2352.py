@@ -1,28 +1,17 @@
-#2352. Equal Row and Column Pairs
-
-
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
-
 class Solution:
-    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        dummy = ListNode()
-        current = dummy
-        carry = 0
+    def equalPairs(self, grid: List[List[int]]) -> int:
+        n= len(grid)
+        row_count = {}
+        count = 0
 
-        while l1 or l2 or carry:
-            var1 = l1.val if l1 else 0
-            var2 = l2.val if l2 else 0
+        for row in grid:
+            row_tuple = tuple(row)
+            row_count[row_tuple] = row_count.get(row_tuple, 0)+1
 
-            sum = var1 + var2 + carry 
-            carry = sum // 10 
-            current.next = ListNode(sum % 10)  
-            current = current.next  
-            
-            l1 = l1.next if l1 else None
-            l2 = l2.next if l2 else None
+        for j in range(n): 
+            col = [grid[i][j] for i in range(n)]
+            col_tuple = tuple(col)
+            if col_tuple in row_count: 
+                count+=row_count[col_tuple]
 
-        return dummy.next
+        return count
